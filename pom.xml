@@ -10,6 +10,7 @@
     <modules>
         <module>rpc-api</module>
         <module>rpc-provider</module>
+        <module>rpc-register</module>
     </modules>
     <packaging>pom</packaging>
 

@@ -1,5 +1,6 @@
 package com.jean.rpc;
 
+import com.jean.annotation.RpcService;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;

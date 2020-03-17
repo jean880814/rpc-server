@@ -1,4 +1,4 @@
-package com.jean.rpc;
+package com.jean.annotation;
 
 import org.springframework.stereotype.Component;
 

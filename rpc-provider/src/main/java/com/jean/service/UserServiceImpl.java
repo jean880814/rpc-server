@@ -1,10 +1,12 @@
 package com.jean.service;
 
 import com.jean.model.User;
-import com.jean.rpc.RpcService;
+import com.jean.annotation.RpcService;
 
-@RpcService(value = UserService.class,version = "v1.0")
-public class UserServiceImpl implements UserService {
+import java.io.Serializable;
+
+@RpcService(value = UserService.class)
+public class UserServiceImpl implements UserService, Serializable {
     public String getUser(String id) {
         System.out.println("getUser + " + id);
         return "hello jean";
