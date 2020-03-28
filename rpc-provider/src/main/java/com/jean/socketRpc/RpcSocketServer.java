@@ -1,4 +1,4 @@
-package com.jean.rpc;
+package com.jean.socketRpc;
 
 import java.io.IOException;
 import java.net.ServerSocket;

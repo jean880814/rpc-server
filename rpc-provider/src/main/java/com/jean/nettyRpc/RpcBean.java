@@ -2,6 +2,8 @@ package com.jean.nettyRpc;
 
 import com.jean.model.NettyRpcRequest;
 import com.jean.annotation.RpcService;
+import com.jean.zkRegistry.IRegister;
+import com.jean.zkRegistry.RegisterWithZk;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
@@ -19,12 +21,14 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+import java.net.InetAddress;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class RpcBean implements ApplicationContextAware, InitializingBean {
     private final int port;
     private static final Map<String, Object> instanceMap = new ConcurrentHashMap<String, Object>();
+    private IRegister register = new RegisterWithZk();
 
     public RpcBean(int port) {
         this.port = port;
@@ -41,8 +45,19 @@ public class RpcBean implements ApplicationContextAware, InitializingBean {
 //                    serviceName+="-"+version;
 //                }
                 instanceMap.put(serviceName,servcieBean);
+                register.register(serviceName, getAddress() + ":" + port);
             }
         }
+    }
+
+    private static String getAddress(){
+        InetAddress inetAddress=null;
+        try {
+            inetAddress=InetAddress.getLocalHost();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return inetAddress.getHostAddress();
     }
 
     public void afterPropertiesSet() throws Exception {

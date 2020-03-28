@@ -1,4 +1,4 @@
-package com.jean.rpc;
+package com.jean.socketRpc;
 
 import com.jean.model.RpcRequest;
 
@@ -7,13 +7,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.Method;
 import java.net.Socket;
+import java.util.Map;
 
-public class RpcPublisherHandler implements Runnable {
+public class RpcPublisherHandlerByMap implements Runnable {
     private final Socket socket;
-    private final Object instance;
+    private final Map<String, Object> instanceMap;
 
-    public RpcPublisherHandler(Object instance, Socket socket) {
-        this.instance = instance;
+    public RpcPublisherHandlerByMap(Socket socket, Map<String, Object> instanceMap) {
+        this.instanceMap = instanceMap;
         this.socket = socket;
     }
 
@@ -53,6 +54,6 @@ public class RpcPublisherHandler implements Runnable {
         }
         Class clazz = Class.forName(classname);
         Method method = clazz.getMethod(rpcRequest.getMethod(), types);
-        return method.invoke(instance, args);
+        return method.invoke(instanceMap.get(classname + "-" + rpcRequest.getVersion()), args);
     }
 }

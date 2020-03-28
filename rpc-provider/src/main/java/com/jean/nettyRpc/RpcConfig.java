@@ -10,6 +10,6 @@ public class RpcConfig {
 
     @Bean
     public RpcBean rpcBean(){
-        return new RpcBean(2181);
+        return new RpcBean(8080);
     }
 }
